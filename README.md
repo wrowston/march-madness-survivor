@@ -1,27 +1,68 @@
 # march-madness-survivor
 
-Welcome to your new [Mastra](https://mastra.ai/) project! We're excited to see what you'll build.
+Mastra backend for a March Madness survivor pool assistant and daily workflow.
 
-## Getting Started
+## Core capabilities
 
-Start the development server:
+- `survivorPoolAgent`: conversational assistant for pick analysis
+- `survivorDailyWorkflow`: deterministic daily pick workflow
+- Survivor constraints:
+  - one-team-once per tournament
+  - elimination on loss
+  - one pick required per game day
+- Data inputs:
+  - NCAA schedule/game endpoints
+  - betting odds
+  - historical seed win-rate baselines
+  - web research signals
 
-```shell
-bun run dev
+## Local development
+
+1. Copy `.env.example` to `.env` and fill values.
+2. Start dev server:
+
+```bash
+npm run dev
 ```
 
-Open [http://localhost:4111](http://localhost:4111) in your browser to access [Mastra Studio](https://mastra.ai/docs/getting-started/studio). It provides an interactive UI for building and testing your agents, along with a REST API that exposes your Mastra application as a local service. This lets you start building without worrying about integration right away.
+3. Build:
 
-You can start editing files inside the `src/mastra` directory. The development server will automatically reload whenever you make changes.
+```bash
+npm run build
+```
 
-## Learn more
+## Testing and backtesting
 
-To learn more about Mastra, visit our [documentation](https://mastra.ai/docs/). Your bootstrapped project includes example code for [agents](https://mastra.ai/docs/agents/overview), [tools](https://mastra.ai/docs/agents/using-tools), [workflows](https://mastra.ai/docs/workflows/overview), [scorers](https://mastra.ai/docs/evals/overview), and [observability](https://mastra.ai/docs/observability/overview).
+- Unit + integration checks:
 
-If you're new to AI agents, check out our [course](https://mastra.ai/course) and [YouTube videos](https://youtube.com/@mastra-ai). You can also join our [Discord](https://discord.gg/BTYqqHKUrf) community to get help and share your projects.
+```bash
+npm run test
+```
 
-## Deploy on Mastra Cloud
+- Run a simple historical-style simulation harness:
 
-[Mastra Cloud](https://cloud.mastra.ai/) gives you a serverless agent environment with atomic deployments. Access your agents from anywhere and monitor performance. Make sure they don't go off the rails with evals and tracing.
+```bash
+npm run backtest
+```
 
-Check out the [deployment guide](https://mastra.ai/docs/deployment/overview) for more details.
+## Railway deployment (backend only)
+
+This repo includes `railway.json` for deployment defaults.
+
+### Required environment variables
+
+- `DATABASE_URL`
+- `OPENROUTER_API_KEY`
+- `DEFAULT_MODEL` (example: `openrouter/openai/gpt-4o-mini`)
+- `ODDS_API_KEY`
+- `EXA_API_KEY`
+- `FRONTEND_URL` (allowed CORS origin)
+
+### Optional scheduler variables
+
+- `ENABLE_DAILY_SURVIVOR_SCHEDULER=true`
+- `SCHEDULER_USER_ID=default`
+- `SCHEDULER_TOURNAMENT_YEAR=2026`
+- `SCHEDULER_RISK_MODE=balanced`
+
+When enabled, the scheduler attempts a workflow run every hour and safely skips non-game days.

@@ -109,11 +109,13 @@ const customTools = {
   getPicksHistoryTool,
 };
 
+const defaultModel = process.env.DEFAULT_MODEL ?? "openrouter/openai/gpt-4o-mini";
+
 export const survivorPoolAgent = new Agent({
   id: "survivor-pool-agent",
   name: "March Madness Survivor Pool Advisor",
   instructions: STRATEGY_INSTRUCTIONS,
-  model: "cerebras/llama-3.3-70b",
+  model: defaultModel,
   tools: async () => {
     const exaTools = await exaMcpClient.listTools();
     return { ...customTools, ...exaTools };
