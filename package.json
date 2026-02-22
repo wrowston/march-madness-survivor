@@ -21,11 +21,11 @@
   },
   "dependencies": {
     "@mastra/core": "^1.5.0",
-    "@mastra/evals": "^1.1.2",
-    "@mastra/libsql": "^1.5.0",
     "@mastra/loggers": "^1.0.2",
+    "@mastra/mcp": "^1.0.1",
     "@mastra/memory": "^1.4.0",
-    "@mastra/observability": "^1.2.0",
+    "@mastra/pg": "^1.5.0",
+    "pg": "^8.16.0",
     "zod": "^4"
   }
 }
