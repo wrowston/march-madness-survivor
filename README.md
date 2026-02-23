@@ -25,6 +25,18 @@ Mastra backend for a March Madness survivor pool assistant and daily workflow.
 npm run dev
 ```
 
+Run backend + frontend together:
+
+```bash
+npm run dev:all
+```
+
+Run frontend only:
+
+```bash
+npm run dev:web
+```
+
 3. Build:
 
 ```bash
@@ -48,6 +60,30 @@ npm run backtest
 ## Railway deployment (backend only)
 
 This repo includes `railway.json` for deployment defaults.
+
+## assistant-ui frontend (same repo)
+
+The frontend lives in `apps/web` and uses `assistant-ui` with a server route proxy at `apps/web/src/app/api/chat/route.ts` to call the Mastra agent.
+
+### Frontend environment variables
+
+- `MASTRA_API_URL` (default: `http://localhost:4111`)
+- `MASTRA_AGENT_ID` (default: `survivor-pool-agent`)
+
+### Railway in same repo
+
+Use two Railway services pointing at this repo:
+
+1. **api service**
+   - Start command: `npm run start`
+   - Uses root `railway.json` defaults
+2. **web service**
+   - Root directory: `apps/web`
+   - Build command: `npm run build`
+   - Start command: `npm run start`
+   - Set `MASTRA_API_URL` to the public URL of the api service
+
+Set backend `FRONTEND_URL` to the public URL of the web service so CORS is aligned.
 
 ### Required environment variables
 

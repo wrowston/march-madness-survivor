@@ -6,6 +6,7 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/node": "^25.3.0",
+    "concurrently": "^9.2.1",
     "mastra": "^1.3.2"
   },
   "peerDependencies": {
@@ -16,8 +17,13 @@
   },
   "scripts": {
     "dev": "mastra dev",
+    "dev:api": "mastra dev",
+    "dev:web": "npm --prefix apps/web run dev",
+    "dev:all": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
     "build": "mastra build",
+    "build:web": "npm --prefix apps/web run build",
     "start": "mastra start",
+    "start:web": "npm --prefix apps/web run start",
     "test": "bun test",
     "test:unit": "bun test tests/scoring.test.ts",
     "test:integration": "bun test tests/workflow-rules.test.ts",
